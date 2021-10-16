@@ -1,0 +1,255 @@
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
+<!-- <script type="text/javascript">
+Highcharts.chart('container', {
+  chart: {
+          type: 'spline',
+          scrollablePlotArea: {
+              minWidth: 600,
+              scrollPositionX: 1
+          }
+      },
+  title: {
+      text: 'Трафик средств передвижения и людей в течение дня по часам.'
+  },
+
+  xAxis: {
+    title: {
+        text: 'Время(часов)'
+    }
+  },
+
+  legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle'
+  },
+
+  plotOptions: {
+
+            pointInterval: 3600000,
+            pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
+        },
+
+  series: [{
+      name: 'Люди',
+      data: {{all_novaya.person}}
+  }, {
+      name: 'Машины',
+      data: {{all_novaya.car}}
+  }, {
+      name: 'Мотоциклы',
+      data: {{all_novaya.motorbike}}
+  }, {
+      name: 'Велосипеды',
+      data: {{all_novaya.bicycle}}
+  },],
+
+  responsive: {
+      rules: [{
+          condition: {
+              maxWidth: 400
+          },
+          chartOptions: {
+              legend: {
+                  layout: 'horizontal',
+                  align: 'center',
+                  verticalAlign: 'bottom'
+              }
+          }
+      }]
+  }
+
+});
+
+</script> -->
+<!--
+<script type="text/javascript">
+  Highcharts.chart('novaya_container', {
+    chart: {
+            type: 'spline',
+            scrollablePlotArea: {
+                minWidth: 600,
+                scrollPositionX: 1
+            }
+        },
+    title: {
+        text: 'Трафик средств передвижения и людей в течение дня по часам.'
+    },
+
+    xAxis: {
+      title: {
+          text: 'Время(часов)'
+      }
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+
+              pointInterval: 3600000,
+              pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
+          },
+
+    series: [{
+        name: 'Люди',
+        data: {{novaya.pers}}
+    }, {
+        name: 'Машины',
+        data: {{novaya.car}}
+    }, {
+        name: 'Мотоциклы',
+        data: {{novaya.motor}}
+    }, {
+        name: 'Велосипеды',
+        data: {{novaya.bicycle}}
+    },],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 400
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+  });
+</script>
+<script type="text/javascript">
+  Highcharts.chart('teatralnaya_container', {
+    chart: {
+            type: 'spline',
+            scrollablePlotArea: {
+                minWidth: 600,
+                scrollPositionX: 1
+            }
+        },
+    title: {
+        text: 'Трафик средств передвижения и людей в течение дня по часам.'
+    },
+
+    xAxis: {
+      title: {
+          text: 'Время(часов)'
+      }
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+
+              pointInterval: 3600000,
+              pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
+          },
+
+    series: [{
+        name: 'Люди',
+        data: {{teatralnaya.pers}}
+    }, {
+        name: 'Машины',
+        data: {{teatralnaya.car}}
+    }, {
+        name: 'Мотоциклы',
+        data: {{teatralnaya.motor}}
+    }, {
+        name: 'Велосипеды',
+        data: {{teatralnaya.bicycle}}
+    },],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 400
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+  });
+</script>
+<script type="text/javascript">
+  Highcharts.chart('sobornaya_container', {
+    chart: {
+            type: 'spline',
+            scrollablePlotArea: {
+                minWidth: 600,
+                scrollPositionX: 1
+            }
+        },
+    title: {
+        text: 'Трафик средств передвижения и людей в течение дня по часам.'
+    },
+
+    xAxis: {
+      title: {
+          text: 'Время(часов)'
+      }
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+
+              pointInterval: 3600000,
+              pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
+          },
+
+    series: [{
+        name: 'Люди',
+        data: {{sobornaya.pers}}
+    }, {
+        name: 'Машины',
+        data: {{sobornaya.car}}
+    }, {
+        name: 'Мотоциклы',
+        data: {{sobornaya.motor}}
+    }, {
+        name: 'Велосипеды',
+        data: {{sobornaya.bicycle}}
+    },],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 400
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+  });
+</script> -->

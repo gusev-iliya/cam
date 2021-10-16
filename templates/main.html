@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+<style media="screen">
+#mapid {
+height: 350px;
+width:70%;
+margin-left: auto;
+margin-right: auto;}
+/* .test{
+  display:inline;
+  width:300px;
+  height:300px;
+  background-color: red;
+} */
+h1{
+  text-align: center;
+}
+.block-cont{
+display: flex;
+width:80%;
+margin-left: 15%;
+}
+.date{
+  display: flex;
+  width:70%;
+  margin-left: 15%;
+}
+.numbers{
+width:200px;
+margin-top: 70px;
+margin-right: 15%;
+}
+.chart{
+  width: 5235325435px;
+  height: 1px;
+}
+.all_chart{
+  width:70%;
+}
+.blocks{
+  display:none;
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;}
+.glow-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px 20px;
+  width:100%;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 40px #F137A6 inset, 0 0 0 0 #F137A6;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  transition: .15s ease-in-out;
+  text-align: center;
+}
+.glow-button:hover {
+  box-shadow: 0 0 10px 0 #F137A6 inset, 0 0 10px 4px #F137A6;
+  color: #F137A6;
+}
+/* .floating-button {
+  text-decoration: none;
+  display: inline-block;
+  width: 140px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+.floating-button:hover {
+  background: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+  color: white;
+  transform: translateY(-7px);
+  } */
+</style>
+<title>{% block title %}Сайт{% endblock %}</title>
+
+
+
+</head>
+<body>
+{%block body%}{%endblock%}
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<script type="text/javascript">
+var mymap = L.map('mapid').setView([54.629546, 39.730865], 13);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+maxZoom: 20,
+id: 'mapbox/streets-v10',
+tileSize: 512,
+zoomOffset: -1,
+accessToken: 'sk.eyJ1IjoiZ3VzZXYxMjMiLCJhIjoiY2t0YnY3cnl5MXpuYzJ1cWxzd3VkODJ6MSJ9.wnFkAE2pAL32I-ukyYhwwg'
+}).addTo(mymap);
+
+function del(){
+  for (let i = 1; i < 13; i++) {
+  document.getElementById(i).style.display = "none";
+}
+  // document.getElementById("1").style.display = "none";
+  // document.getElementById("2").style.display = "none";
+  // document.getElementById("3").style.display = "none";
+  // document.getElementById("4").style.display = "none";
+  // document.getElementById("5").style.display = "none";
+  // document.getElementById("6").style.display = "none";
+  // document.getElementById("7").style.display = "none";
+  // document.getElementById("8").style.display = "none";
+  // document.getElementById("9").style.display = "none";
+  // document.getElementById("10").style.display = "none";
+  // document.getElementById("11").style.display = "none";
+  // document.getElementById("12").style.display = "none";
+}
+var marker1 = L.marker([{{points[0][1]}}, {{points[0][2]}}]).addTo(mymap);
+marker1.bindPopup("{{points[0][0]}}");
+function a(){
+  del()
+document.getElementById("1").style.display = "inline";}
+marker1.on('click', a);
+
+var marker2 = L.marker([{{points[1][1]}}, {{points[1][2]}}]).addTo(mymap);
+marker2.bindPopup('{{points[1][0]}}');
+function b(){
+    del()
+document.getElementById("2").style.display = "inline";}
+marker2.on('click', b);
+
+var marker3 = L.marker([{{points[2][1]}}, {{points[2][2]}}]).addTo(mymap);
+marker3.bindPopup("{{points[2][0]}}");
+function с(){
+    del()
+document.getElementById("3").style.display = "inline";}
+marker3.on('click', с);
+
+var marker4 = L.marker([{{points[3][1]}}, {{points[3][2]}}]).addTo(mymap);
+marker4.bindPopup("{{points[3][0]}}");
+function d(){
+    del()
+document.getElementById("4").style.display = "inline";}
+marker4.on('click', d);
+
+var marker5 = L.marker([54.629384, 39.736122]).addTo(mymap);
+marker5.bindPopup("ул. Соборная");
+function e(){
+    del()
+document.getElementById("5").style.display = "inline";}
+marker5.on('click', e);
+
+var marker6 = L.marker([54.631551, 39.740180]).addTo(mymap);
+marker6.bindPopup("Соборная-Ленина");
+function f(){
+    del()
+document.getElementById("6").style.display = "inline";}
+marker6.on('click', f);
+
+var marker7 = L.marker([54.629066, 39.716254]).addTo(mymap);
+marker7.bindPopup("Первомайская-Дзержинского");
+function g(){
+    del()
+document.getElementById("7").style.display = "inline";}
+marker7.on('click', g);
+
+var marker8 = L.marker([54.628960, 39.711518]).addTo(mymap);
+marker8.bindPopup("Первомайский проспект");
+function h(){
+    del()
+document.getElementById("8").style.display = "inline";}
+marker8.on('click', h);
+
+var marker9 = L.marker([54.637146, 39.723662]).addTo(mymap);
+marker9.bindPopup("Каширина-Солнечная");
+function i(){
+    del()
+document.getElementById("9").style.display = "inline";}
+marker9.on('click', i);
+
+var marker10 = L.marker([54.621673, 39.756643]).addTo(mymap);
+marker10.bindPopup("пл. Театральная");
+function j(){
+    del()
+document.getElementById("10").style.display = "inline";}
+marker10.on('click', j);
+
+var marker11 = L.marker([54.628990, 39.753649]).addTo(mymap);
+marker11.bindPopup("ул. Свободы");
+function k(){
+    del()
+document.getElementById("11").style.display = "inline";}
+marker11.on('click', k);
+
+var marker12 = L.marker([54.629212, 39.737495]).addTo(mymap);
+marker12.bindPopup("ул. Почтовая");
+function l(){
+    del()
+document.getElementById("12").style.display = "inline";}
+marker12.on('click', l);
+
+
+
+</script>
+
+
+</body>
+</html>

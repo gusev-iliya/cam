@@ -1,0 +1,54 @@
+<div class="blocks" id="11">
+  <h1>ул. Свободы</h1>
+  <h2>Люди:{{novaya.pers[0]}}</h2>
+  <h2>Машины:{{novaya.car[0]}}</h2>
+  <h2>Велосипеды:{{novaya.bicycle[0]}}</h2>
+  <h2>Мотоциклы:{{novaya.motor[0]}}</h2>
+  <figure class="highcharts-figure">
+    <div id="novaya_container"></div>
+</figure>
+</div>
+
+<!-- <script type="text/javascript">
+  Highcharts.chart('novaya_container', {
+    chart: {
+            type: 'spline',
+            scrollablePlotArea: {
+                minWidth: 600,
+                scrollPositionX: 1}},
+    title: {
+        text: 'Трафик средств передвижения и людей в течение дня по часам.'},
+    xAxis: {
+      title: {
+          text: 'Время(часов)'  }},
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'},
+    plotOptions: {  pointInterval: 3600000,
+              pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)},
+    series: [{
+        name: 'Люди',
+        data: {{novaya.pers}}
+      }, {
+        name: 'Машины',
+        data: {{novaya.car}}
+    }, {
+        name: 'Мотоциклы',
+        data: {{novaya.motor}}
+    }, {
+        name: 'Велосипеды',
+        data: {{novaya.bicycle}}
+    },],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 400},
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'  }  }}  }});
+
+</script> -->

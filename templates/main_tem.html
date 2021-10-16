@@ -1,0 +1,132 @@
+{%extends 'main.html'%}
+{%block body%}
+
+<!-- <link rel="stylesheet" href="C:\Users\i.gusev\cam\templates\css\style.css" type="text/css"/> -->
+<h1>{{file}}</h1>
+
+<div id="mapid"></div>
+
+<div class="blocks" id="1">
+  <h1 >Новая-Циолковского</h1>
+  <div class="block-cont">
+  <div class="numbers"></div>
+
+  <div class="all_chart">
+    <div class="date">
+    <a href="#" class='glow-button'>day</a>
+    <a href="#" class='glow-button'>week</a>
+    <a href="#" class='glow-button'>month</a>
+    </div>
+    <div id="chart" class="chart" ></div>
+  </div>
+  </div>
+</div>
+
+<div class="blocks" id="2">
+  <h1>Солотчинский мост</h1>
+  <p>{{points[0][0]}}</p>
+</div>
+
+<div class="blocks" id="3">
+  <h1>Московский-Барс</h1>
+</div>
+
+<div class="blocks" id="4">
+  <h1 >Площадь Ленина</h1>
+</div>
+
+<div class="blocks" id="5">
+  <h1>ул. Соборная</h1>
+  <div class="block-cont">
+
+
+  </div>
+  <figure class="highcharts-figure">
+    <div id="sobornaya_container"></div>
+</figure>
+</div>
+
+
+<div class="blocks" id="6">
+  <h1 id="6">Соборная-Ленина</h1>
+</div>
+
+<div class="blocks" id="7">
+  <h1>Первомайская-Дзержинского</h1>
+</div>
+
+<div class="blocks" id="8">
+  <h1>Первомайский проспект</h1>
+</div>
+
+<div class="blocks" id="9">
+  <h1>Каширина-Солнечная</h1>
+</div>
+
+<div class="blocks" id="10">
+  <h1>пл. Театральная</h1>
+  <div class="block-cont">
+
+
+  </div>
+  <figure class="highcharts-figure">
+    <div id="teatralnaya_container"></div>
+</figure>
+</div>
+
+
+<div class="blocks" id="11">
+  <h1>ул. Свободы</h1>
+
+</div>
+
+<div class="blocks" id="12">
+  <h1>ул. Почтовая</h1>
+</div>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+var numbers = document.querySelector('.numbers')
+var arr = "{{novaya.names}}".split(',')
+for (var i = 0; i < {{novaya.len}}; i++) {
+  var el = document.createElement('a')
+
+  el.className = 'glow-button'
+  el.href = '#'
+  el.innerHTML = arr[i]
+  el.onclick = fun(arr[i])
+  numbers.appendChild(el)
+}
+var name = ''
+function fun(name1){
+  name = name1
+}
+google.charts.load('current', {packages: ['line']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+
+     var data = new google.visualization.DataTable();
+     data.addColumn('number', 'Day');
+     data.addColumn('number', 'Guardians of the Galaxy');
+     data.addColumn('number', 'The Avengers');
+     data.addColumn('number', 'Transformers: Age of Extinction');
+
+     data.addRows([
+[1,323]
+     ]);
+
+     var options = {
+       chart: {
+         title: 'Box Office Earnings in First Two Weeks of Opening',
+         subtitle: 'in millions of dollars (USD)'
+       },
+       width: 900,
+       height: 500
+     };
+
+     var chart = new google.charts.Line(document.getElementById('chart'));
+
+     chart.draw(data, google.charts.Line.convertOptions(options));
+   }
+</script>
+{%endblock%}
