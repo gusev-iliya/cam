@@ -22,20 +22,30 @@ def index():
             self.all = list(cursor.execute(f'SELECT * FROM Novaya').fetchall())
             self.data = eval(str(self.a[6]))
             self.names = ','.join(list(self.data.keys()))
-            self.names1= list(self.data.keys())
-            self.len = len(list(self.data.keys()))
-            self.data1 = {}
-            self.labels=[]
-            print()
+            self.names1= ''
             for i in list(self.data.keys()):
-                self.data1[i] = []
-            for j in self.all:
-                self.labels.append(j[3])
-                for k in list(self.data.keys()):
-                    self.data1[k].append(eval(str(j[6]))[k])
+                self.names1+=i
+                self.names1+=','
+            self.len = len(list(self.data.keys()))
+            self.data1 = ''
+            self.max=0
+            self.labels=[]
+            # for i in range(len(list(self.data.values())[0]) ):
+            #     self.labels.append(i)
+            # for i in list(self.data.keys()):
+            #     self.data1[i] = []
+            for i in self.all:
+                self.max+=1
+            for k in list(self.data.keys()):
 
+                for j in self.all:
+                    self.data1+= str(eval(str(j[6]))[k])
+                    self.data1+=','
+                self.data1+='$'
 
+            for i in range(self.max):
 
+                self.labels.append(i)
     novaya = Novaya(cursor)
 
     return render_template('main_tem.html',points=points,file=f,novaya=novaya)

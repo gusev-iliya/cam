@@ -9,7 +9,7 @@
 <div class="blocks" id="1">
   <h1 >Новая-Циолковского</h1>
   <div class="block-cont">
-  <div class="numbers"></div>
+  <div class="numbers" id='legend'></div>
 
   <div class="all_chart">
     <div class="date">
@@ -90,31 +90,105 @@
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
 <script type="text/javascript">
-var numbers = document.querySelector('.numbers')
-var arr = "{{novaya.names}}".split(',')
-for (var i = 0; i < {{novaya.len}}; i++) {
-  var el = document.createElement('a')
-
-  el.className = 'glow-button'
-  el.href = '#'
-  el.innerHTML = arr[i]
-  el.onclick = fun(arr[i])
-  numbers.appendChild(el)
-}
-var name = ''
-function fun(name1){
-  name = name1
-}
+// var numbers = document.querySelector('.numbers')
+// var arr = "{{novaya.names}}".split(',')
+// for (var i = 0; i < {{novaya.len}}; i++) {
+//   var el = document.createElement('a')
+//
+//   el.className = 'glow-button'
+//   el.href = '#'
+//   el.innerHTML = arr[i]
+//   el.onclick = fun(arr[i])
+//   numbers.appendChild(el)
+// }
+// var name = ''
+// function fun(name1){
+//   name = name1
+// }
 
 </script>
 <script>
+  const getOrCreateLegendList = (chart, id) => {
+    const legendContainer = document.getElementById(id);
+    let listContainer = legendContainer.querySelector('ul');
+
+    if (!listContainer) {
+      listContainer = document.createElement('ul');
+      listContainer.style.display = 'flex';
+      listContainer.style.flexDirection = 'column';
+      listContainer.style.margin = 0;
+      listContainer.style.padding = 0;
+
+      legendContainer.appendChild(listContainer);
+    }
+
+    return listContainer;
+  };
+  const htmlLegendPlugin = {
+    id: 'htmlLegend',
+    afterUpdate(chart, args, options) {
+      const ul = getOrCreateLegendList(chart, options.containerID);
+
+      // Remove old legend items
+      while (ul.firstChild) {
+        ul.firstChild.remove();
+      }
+
+      // Reuse the built-in legendItems generator
+      const items = chart.options.plugins.legend.labels.generateLabels(chart);
+
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.style.alignItems = 'center';
+        li.style.cursor = 'pointer';
+        li.style.display = 'flex';
+        li.style.flexDirection = 'row';
+        li.style.marginLeft = '10px';
+
+        li.onclick = () => {
+          const {type} = chart.config;
+          if (type === 'pie' || type === 'doughnut') {
+            // Pie and doughnut charts only have a single dataset and visibility is per item
+            chart.toggleDataVisibility(item.index);
+          } else {
+            chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
+          }
+          chart.update();
+        };
+
+        // Color box
+        const boxSpan = document.createElement('span');
+        boxSpan.style.background = item.fillStyle;
+        boxSpan.style.borderColor = item.strokeStyle;
+        boxSpan.style.borderWidth = item.lineWidth + 'px';
+        boxSpan.style.display = 'inline-block';
+        boxSpan.style.height = '30px';
+        boxSpan.style.marginRight = '10px';
+        boxSpan.style.width = '40px';
+
+        // Text
+        const textContainer = document.createElement('p');
+        textContainer.style.color = item.fontColor;
+        textContainer.style.font.size='100%';
+        textContainer.style.margin = 0;
+        textContainer.style.padding = 0;
+        textContainer.style.textDecoration = item.hidden ? 'line-through' : '';
+
+        const text = document.createTextNode(item.text);
+        textContainer.appendChild(text);
+
+        li.appendChild(boxSpan);
+        li.appendChild(textContainer);
+        ul.appendChild(li);
+      });
+    }
+  };
 var ctx = document.getElementById('chart');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: {{novaya.labels}},
-        datasets: [{
-        }]
+        datasets: []
     },
     options: {
         scales: {
@@ -124,17 +198,85 @@ var myChart = new Chart(ctx, {
         },
         layout: {
 
-        }
+        },
+        plugins: {
+      htmlLegend: {
+        // ID of the container to put the legend in
+        containerID: 'legend',
+      },
+      legend: {
+        display: false,
+      }
     }
+  },
+  plugins: [htmlLegendPlugin],
 });
-function addData(chart, number, label, data) {
-    chart.data.datasets[number].label = label;
-    chart.data.datasets[number].data = data;
+
+</script>
+<!-- <script type="text/javascript">
+
+   for (var i = 0; i < {{novaya.len}}; i++) {
+     var a="{{novaya.names1}}".split(',')
+     var b= "{{novaya.data1}}".split('$')
+    addData(myChart,i,a[i],b[i])
+  }
+  function addData(chart, number, label, data) {
+      chart.data.datasets[number].label = label;
+      chart.data.datasets[number].data = data;
+      chart.update();
+  }
+</script> -->
+<script type="text/javascript">
+  COLORS = [
+    '#4dc9f6',
+    '#f67019',
+    '#f53794',
+    '#537bc4',
+    '#acc236',
+    '#166a8f',
+    '#00a950',
+    '#58595b',
+    '#8549ba'
+  ];
+  function addData(chart,label, data, color,back) {
+    // var labels=[];
+    // for (var i = 0; i < num; i++) {
+    // labels.push(i);
+    // }
+    // chart.data.labels=labels;
+    var dataset={
+      label:label,
+      data:data,
+      // fill: false,
+      borderColor:color,
+      backgroundColor:back
+    }
+    chart.data.datasets.push(dataset);
+    chart.options.interaction.axis = 'xy';
+    chart.options.interaction.mode = 'nearest';
+    chart.options.plugins.legend.position = 'left';
+    // chart.options.plugins.legend.align = 'start';
+    // chart.options.plugins.legend.title.position = 'start';
     chart.update();
 }
 for (var i = 0; i < {{novaya.len}}; i++) {
-  addData(myChart,i,"{{novaya.names1[i]}}",{{novaya.data1[novaya.names1[i]]}})
-
+  a = "{{novaya.names1}}".split(',')
+  b = "{{novaya.data1}}".split('$')
+  for (var j = 0; j < b.length; j++) {
+    b[j]=b[j].split(',')
+    for (var x = 0; x < b[j]; x++) {
+      b[j][x] = Number(b[j][x])
+    }
+  }
+    addData(myChart,a[i],b[i],COLORS[i],COLORS[i])
 }
+
+
+
+
+
+
+
+
 </script>
 {%endblock%}
