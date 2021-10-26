@@ -13,9 +13,9 @@
 
   <div class="all_chart">
     <div class="date">
-    <a href="#" class='glow-button'>day</a>
-    <a href="#" class='glow-button'>week</a>
-    <a href="#" class='glow-button'>month</a>
+    <a href="#" class='glow-button' onclick="day()">day</a>
+    <a href="#" class='glow-button' onclick="week()">week</a>
+    <a href="#" class='glow-button' onclick="month()">month</a>
     </div>
     <div class="chart_c">
 
@@ -187,7 +187,7 @@ var ctx = document.getElementById('chart');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: {{novaya.labels}},
+        labels: [],
         datasets: []
     },
     options: {
@@ -238,12 +238,15 @@ var myChart = new Chart(ctx, {
     '#58595b',
     '#8549ba'
   ];
-  function addData(chart,label, data, color,back) {
+  function addLabels(chart,labels){
+    chart.data.labels=labels;
+    chart.update();
+  }
+  addLabels(myChart,{{novaya.labels}})
+  function addData(chart,label, data, color,back,) {
     // var labels=[];
     // for (var i = 0; i < num; i++) {
     // labels.push(i);
-    // }
-    // chart.data.labels=labels;
     var dataset={
       label:label,
       data:data,
@@ -259,20 +262,33 @@ var myChart = new Chart(ctx, {
     // chart.options.plugins.legend.title.position = 'start';
     chart.update();
 }
-for (var i = 0; i < {{novaya.len}}; i++) {
-  a = "{{novaya.names1}}".split(',')
-  b = "{{novaya.data1}}".split('$')
-  for (var j = 0; j < b.length; j++) {
-    b[j]=b[j].split(',')
-    for (var x = 0; x < b[j]; x++) {
-      b[j][x] = Number(b[j][x])
-    }
+function addAll(chart,len,names,data){
+  for (var i = 0; i < len; i++) {
+
+      addData(chart,names[i],data[i],COLORS[i],COLORS[i])
   }
-    addData(myChart,a[i],b[i],COLORS[i],COLORS[i])
 }
-
-
-
+addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.data1|safe}})
+function removeData(chart) {
+    chart.data.labels=[];
+    chart.data.datasets = []
+    chart.update();
+}
+function day(){
+  removeData(myChart);
+  addLabels(myChart,{{novaya.labels}})
+  addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.data1|safe}})
+}
+function week(){
+  removeData(myChart);
+  addLabels(myChart,{{novaya.labels_month[:7]|safe}})
+  addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.sum_all|safe}})
+}
+function month(){
+  removeData(myChart);
+  addLabels(myChart,{{novaya.labels_month|safe}})
+  addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.sum_all|safe}})
+}
 
 
 
