@@ -6,16 +6,16 @@
 
 <div id="mapid"></div>
 
-<div class="blocks" id="1">
+<div class="blocks" id="1" >
   <h1 >Новая-Циолковского</h1>
   <div class="block-cont">
   <div class="numbers" id='legend'></div>
 
   <div class="all_chart">
     <div class="date">
-    <a href="#" class='glow-button' onclick="day()">day</a>
-    <a href="#" class='glow-button' onclick="week()">week</a>
-    <a href="#" class='glow-button' onclick="month()">month</a>
+    <a id = 'day' href="#" class='glow-button' onclick="day()">day</a>
+    <a id = 'week' href="#" class='glow-button' onclick="week()">week</a>
+    <a id = 'month' href="#" class='glow-button' onclick="month()">month</a>
     </div>
     <div class="chart_c">
 
@@ -124,6 +124,7 @@
 
     return listContainer;
   };
+  var t = true;
   const htmlLegendPlugin = {
     id: 'htmlLegend',
     afterUpdate(chart, args, options) {
@@ -138,13 +139,22 @@
       const items = chart.options.plugins.legend.labels.generateLabels(chart);
 
       items.forEach(item => {
+
         const li = document.createElement('li');
         li.style.alignItems = 'center';
         li.style.cursor = 'pointer';
         li.style.display = 'flex';
         li.style.flexDirection = 'row';
         li.style.marginLeft = '10px';
-
+        if (item.text == 'All') {
+          li.onclick = function(){
+            t=!t;
+              for (var i = 0; i < {{novaya.len}}+1; i++) {
+                chart.setDatasetVisibility(i, t);
+            }
+            chart.update();
+          }
+        }else{
         li.onclick = () => {
           const {type} = chart.config;
           if (type === 'pie' || type === 'doughnut') {
@@ -154,7 +164,7 @@
             chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
           }
           chart.update();
-        };
+        }};
 
         // Color box
         const boxSpan = document.createElement('span');
@@ -212,20 +222,8 @@ var myChart = new Chart(ctx, {
   plugins: [htmlLegendPlugin],
 });
 
-</script>
-<!-- <script type="text/javascript">
 
-   for (var i = 0; i < {{novaya.len}}; i++) {
-     var a="{{novaya.names1}}".split(',')
-     var b= "{{novaya.data1}}".split('$')
-    addData(myChart,i,a[i],b[i])
-  }
-  function addData(chart, number, label, data) {
-      chart.data.datasets[number].label = label;
-      chart.data.datasets[number].data = data;
-      chart.update();
-  }
-</script> -->
+</script>
 <script type="text/javascript">
   COLORS = [
     '#4dc9f6',
@@ -242,7 +240,7 @@ var myChart = new Chart(ctx, {
     chart.data.labels=labels;
     chart.update();
   }
-  addLabels(myChart,{{novaya.labels}})
+
   function addData(chart,label, data, color,back,) {
     // var labels=[];
     // for (var i = 0; i < num; i++) {
@@ -268,24 +266,38 @@ function addAll(chart,len,names,data){
       addData(chart,names[i],data[i],COLORS[i],COLORS[i])
   }
 }
-addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.data1|safe}})
+// addData(myChart,'All',[],'#00f','#00f')
+// addLabels(myChart,{{novaya.labels}})
+// addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.data1|safe}})
 function removeData(chart) {
     chart.data.labels=[];
     chart.data.datasets = []
     chart.update();
 }
 function day(){
+  document.getElementById("day").style.color = "blue";
+  document.getElementById("week").style.color = "white";
+  document.getElementById("month").style.color = "white";
   removeData(myChart);
+  addData(myChart,'All',[],'#00f','#00f')
   addLabels(myChart,{{novaya.labels}})
   addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.data1|safe}})
 }
 function week(){
+  document.getElementById("day").style.color = "white";
+  document.getElementById("week").style.color = "blue";
+  document.getElementById("month").style.color = "white";
   removeData(myChart);
+  addData(myChart,'All',[],'#00f','#00f')
   addLabels(myChart,{{novaya.labels_month[:7]|safe}})
   addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.sum_all|safe}})
 }
 function month(){
+  document.getElementById("day").style.color = "white";
+  document.getElementById("week").style.color = "white";
+  document.getElementById("month").style.color = "blue";
   removeData(myChart);
+  addData(myChart,'All',[],'#00f','#00f')
   addLabels(myChart,{{novaya.labels_month|safe}})
   addAll(myChart,{{novaya.len}},{{novaya.names1|safe}},{{novaya.sum_all|safe}})
 }

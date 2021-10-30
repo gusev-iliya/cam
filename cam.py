@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+import os
+# static_path = os.path.join(project_root, '../templates/static')
 app = Flask(__name__)
 from datetime import datetime
 import data
@@ -73,6 +75,7 @@ def index():
 @app.route('/t')
 def index1():
     return render_template('t.html',)
+
 
 if __name__ == '__main__':
     app.run(debug = True)
